@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Repository } from './styles';
 
 export default function CompareList({ repositories }) {
-
   return (
     <Container>
       {repositories.map(repository => (

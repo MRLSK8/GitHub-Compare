@@ -9,18 +9,18 @@ export const Container = styled.div`
 
 export const Repository = styled.div`
   width: 250px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   margin: 0 10px;
-  
+
   header {
     padding: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     img {
       width: 100%;
       max-width: 4em;
@@ -46,13 +46,12 @@ export const Repository = styled.div`
         font-weight: normal;
         font-size: 0.8em;
         color: #999;
-        font-style: italic; 
+        font-style: italic;
       }
 
-      &:nth-child(2n - 1){
-        background-color: rgba(0, 0, 0, .1);
+      &:nth-child(2n - 1) {
+        background-color: rgba(0, 0, 0, 0.1);
       }
     }
   }
 `;
-

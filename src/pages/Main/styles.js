@@ -17,26 +17,26 @@ export const Form = styled.form`
     flex: 1;
     height: 3em;
     padding: 0 1.5em;
-    background-color: #FFF;
-    border: 0;
+    background-color: #fff;
     font-size: 1em;
     color: #444;
     border-radius: 3px;
+    border: ${props => (props.withError ? '2px solid #F00' : 0)};
   }
 
   button {
     height: 3em;
     padding: 0 1.5em;
-    margin-left:10px;
+    margin-left: 10px;
     background-color: #63f5b8;
-    color: #FFF;
+    color: #fff;
     border: 0;
     font-size: 1em;
     font-weight: bold;
     border-radius: 3px;
 
     &:hover {
-      background-color: #52D89F;
+      background-color: #52d89f;
       cursor: pointer;
     }
   }
