@@ -1,13 +1,12 @@
 import React from "react";
-import GlobalStyle from "./styles/globol";
+import GlobolStyle from "./styles/globol";
+import Main from "./pages/Main";
 
-function App() {
+export default function App() {
   return (
     <>
-      <GlobalStyle />
-      <div className="App"></div>
+      <GlobolStyle />
+      <Main />
     </>
   );
 }
-
-export default App;
