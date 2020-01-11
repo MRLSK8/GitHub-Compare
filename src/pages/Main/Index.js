@@ -75,14 +75,31 @@ export default function Main() {
     const newLocalStorage = savedSearches.filter(
       search => search !== searchString
     );
-    
+
     setSavedSearches(newLocalStorage);
 
     setRepositories(newRepositories);
   };
 
-  const handleUpdateRepository = id => {
-    console.log('Updating: ', id);
+  const handleUpdateRepository = async id => {
+    const newRepositories = repositories.find(
+      repository => repository.id === id
+    );
+
+    await api
+      .get(`repos/${newRepositories.full_name}`)
+      .then(response => {
+        const { data: repository } = response;
+        repository.lastCommit = moment(repository.pushed_at).fromNow();
+        const newRepos = repositories.map(repo =>
+          repo.id === repository.id ? (repo = repository) : repo
+        );
+
+        setRepositories(newRepos);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
