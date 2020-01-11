@@ -5,7 +5,7 @@ export const Container = styled.div`
   border-radius: 7px;
   position: absolute;
   font-size: 14px;
-  right: ${props => props.showAlert ? '2%' : '-20%'};
+  right: ${props => props.showAlert ? '3%' : '-100%'};
   top: 580px;
   padding: 1.5em;
   display: ${props => props.displayNone && props.showAlert ? 'none' : 'flex'};;

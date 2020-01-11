@@ -14,7 +14,7 @@ import 'font-awesome/css/font-awesome.css';
         text-rendering: optimizeLegibility !important;
         -webkit-font-smoothing: antialiased !important;
         font-family: sans-serif;
-        overflow: hidden;
+        overflow-x: hidden;
     }
     ul {
         list-style: none;
