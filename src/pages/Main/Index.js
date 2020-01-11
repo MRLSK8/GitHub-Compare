@@ -10,7 +10,7 @@ export default function Main() {
   const [repositoryInput, setRepositoryInput] = useState('');
   const [repositoryError, setRepositoryError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [savedId, setSavedId] = useState([]);
+  const [savedSearches, setSavedSearches] = useState([]);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('reposSaved'));
@@ -28,13 +28,13 @@ export default function Main() {
         .then(repositories => setRepositories(repositories))
         .catch(err => console.log(err));
 
-      setSavedId(data);
+      setSavedSearches(data);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('reposSaved', JSON.stringify(savedId));
-  }, [savedId]);
+    localStorage.setItem('reposSaved', JSON.stringify(savedSearches));
+  }, [savedSearches]);
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -47,7 +47,7 @@ export default function Main() {
         const { data: repository } = response;
         repository.lastCommit = moment(repository.pushed_at).fromNow();
 
-        setSavedId([...savedId, repositoryInput]);
+        setSavedSearches([...savedSearches, repositoryInput]);
 
         setRepositories([...repositories, repository]);
         setRepositoryInput('');
@@ -58,6 +58,31 @@ export default function Main() {
         setRepositoryError(true);
       })
       .finally(() => setLoading(false));
+  };
+
+  const handleRemoveRepository = id => {
+    var searchString = null;
+
+    const newRepositories = repositories.filter(repository => {
+      if (repository.id !== id) {
+        return true;
+      } else {
+        searchString = repository.full_name;
+        return false;
+      }
+    });
+
+    const newLocalStorage = savedSearches.filter(
+      search => search !== searchString
+    );
+    
+    setSavedSearches(newLocalStorage);
+
+    setRepositories(newRepositories);
+  };
+
+  const handleUpdateRepository = id => {
+    console.log('Updating: ', id);
   };
 
   return (
@@ -77,7 +102,11 @@ export default function Main() {
           {loading ? <i className='fa fa-spinner fa-pulse'></i> : 'Ok'}
         </button>
       </Form>
-      <CompareList repositories={repositories} />
+      <CompareList
+        repositories={repositories}
+        removeRepository={handleRemoveRepository}
+        updateRepository={handleUpdateRepository}
+      />
     </Container>
   );
 }
