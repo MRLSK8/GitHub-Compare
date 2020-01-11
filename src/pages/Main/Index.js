@@ -10,8 +10,25 @@ export default function Main() {
   const [repositoryInput, setRepositoryInput] = useState('');
   const [repositoryError, setRepositoryError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [savedId, setSavedId] = useState([]);
 
-  useEffect(() => {}, [repositories]);
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('reposSaved'));
+    if (data) {
+      const inputsSearched = data.map(item => api.get(`repos/${item}`));
+
+      Promise.all(inputsSearched)
+        .then(result => result.map(item => item.data))
+        .then(item => setRepositories(item))
+        .catch(err => console.log(err));
+
+      setSavedId(data);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('reposSaved', JSON.stringify(savedId));
+  }, [savedId]);
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -23,6 +40,8 @@ export default function Main() {
       .then(response => {
         const { data: repository } = response;
         repository.lastCommit = moment(repository.pushed_at).fromNow();
+
+        setSavedId([...savedId, repositoryInput]);
 
         setRepositories([...repositories, repository]);
         setRepositoryInput('');
@@ -48,7 +67,9 @@ export default function Main() {
           placeholder='usuário/repositório'
           onChange={event => setRepositoryInput(event.target.value)}
         />
-        <button type='submit'>{loading ? <i className='fa fa-spinner fa-pulse'></i> : 'Ok'}</button>
+        <button type='submit'>
+          {loading ? <i className='fa fa-spinner fa-pulse'></i> : 'Ok'}
+        </button>
       </Form>
       <CompareList repositories={repositories} />
     </Container>
