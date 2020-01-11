@@ -18,8 +18,14 @@ export default function Main() {
       const inputsSearched = data.map(item => api.get(`repos/${item}`));
 
       Promise.all(inputsSearched)
-        .then(result => result.map(item => item.data))
-        .then(item => setRepositories(item))
+        .then(repositories => repositories.map(repository => repository.data))
+        .then(repositories =>
+          repositories.map(repository => {
+            repository.lastCommit = moment(repository.pushed_at).fromNow();
+            return repository;
+          })
+        )
+        .then(repositories => setRepositories(repositories))
         .catch(err => console.log(err));
 
       setSavedId(data);
