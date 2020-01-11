@@ -12,7 +12,7 @@ export default function CompareList({ repositories, removeRepository, updateRepo
           </ButtonDelete>
 
           <ButtonUpdate onClick={() => updateRepository(repository.id)}>
-            <i className='fa fa-arrow-circle-down'></i>
+            <i className='fa fa-retweet'></i>
           </ButtonUpdate>
 
           <header>

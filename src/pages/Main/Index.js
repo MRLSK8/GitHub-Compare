@@ -4,6 +4,7 @@ import { Container, Form } from './styles';
 import CompareList from '../../components/CompareList/index';
 import api from '../../services/api';
 import moment from 'moment';
+import Alert from '../../components/Alerts/index';
 
 export default function Main() {
   const [repositories, setRepositories] = useState([]);
@@ -11,6 +12,8 @@ export default function Main() {
   const [repositoryError, setRepositoryError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [savedSearches, setSavedSearches] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [displayNone, setDisplayNone] = useState(true);
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('reposSaved'));
@@ -52,12 +55,19 @@ export default function Main() {
         setRepositories([...repositories, repository]);
         setRepositoryInput('');
         setRepositoryError(false);
+        setShowAlert(false);
       })
       .catch(err => {
-        console.log(err);
+        setDisplayNone(false);
+        setShowAlert(true);
         setRepositoryError(true);
+        console.log(err);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {setShowAlert(false);}, 3000);
+        setTimeout(() => {setDisplayNone(true);}, 5000);
+      });
   };
 
   const handleRemoveRepository = id => {
@@ -124,6 +134,7 @@ export default function Main() {
         removeRepository={handleRemoveRepository}
         updateRepository={handleUpdateRepository}
       />
+      <Alert showAlert={showAlert} displayNone={displayNone}/>
     </Container>
   );
 }

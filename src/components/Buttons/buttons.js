@@ -17,7 +17,7 @@ export const ButtonDelete = styled.button`
 `;
 
 export const ButtonUpdate = styled.button`
-  font-size: 1.1em;
+  font-size: 1em;
   position: absolute;
   padding: 0.1em;
   background: transparent;
