@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import size from '../../styles/Sizes';
 
 export const Container = styled.div`
   display: flex;
@@ -13,6 +14,11 @@ export const Form = styled.form`
   max-width: 400px;
   display: flex;
 
+  @media (max-width: ${size.mobileL}) {
+    display: flex;
+    flex-direction: column;
+  }
+
   input {
     flex: 1;
     height: 3em;
@@ -22,6 +28,12 @@ export const Form = styled.form`
     color: #444;
     border-radius: 3px;
     border: ${props => (props.withError ? '2px solid #F00' : 0)};
+
+    @media (max-width: ${size.mobileL}) {
+      padding: 1em 1.5em;
+      margin-bottom: 5px;
+      margin-left: 10px;
+    }
   }
 
   button {

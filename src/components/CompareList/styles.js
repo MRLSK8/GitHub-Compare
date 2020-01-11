@@ -1,10 +1,28 @@
 import styled from 'styled-components';
+import size from '../../styles/Sizes';
 
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: 3em;
+
+  @media (max-width: ${size.laptop}) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width:  ${size.tablet}) {
+    display: grid;
+    
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: ${size.mobileL}) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const Repository = styled.div`
@@ -13,7 +31,11 @@ export const Repository = styled.div`
   border-radius: 3px;
   display: flex;
   flex-direction: column;
-  margin: 0 10px;
+  margin: 1em 0.8em;
+
+  @media (max-width:  ${size.laptop}) {
+    margin-bottom: 20px;
+  }
 
   header {
     padding: 2em;
